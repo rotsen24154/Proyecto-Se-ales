@@ -1,5 +1,5 @@
-function [SignalResult, Index] = Reflejo(SignalFromUser)
-    SignalResult = fliplr(SignalFromUser);
-    Index = [1,2,3,4,5,6,7];
+function [SignalResult, Index] = Reflejo(SignalFromUser, Index)
+    SignalResult = fliplr(SignalFromUser');
+    Index = fliplr(Index)*-1;
 end
 
