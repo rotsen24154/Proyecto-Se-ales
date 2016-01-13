@@ -48,16 +48,48 @@ function reflejo_Callback(hObject, eventdata, handles)
     
 % --- Executes on button press in atenuacion.
 function atenuacion_Callback(hObject, eventdata, handles)
-    disp('Atenuacion');
+    global SignalResult
+    global SignalFromUser Frecuencia
+    Factor = inputdlg('Factor de atenuacion','Atenuacion');
+    Factor = str2double(Factor{:}); 
+    [SignalResult] = Atenuacion(SignalFromUser, Factor);
+    if (get(handles.radiobutton3,'Value') == 1)
+        disp('Atenuacion');
+        disp('------------------------------------------------------------------------------------------------------');
+        disp(SignalResult);
+    else
+        sound(SignalResult, Frecuencia);
+    end
 
 % --- Executes on button press in ampliacion.
 function ampliacion_Callback(hObject, eventdata, handles)
-    disp('Ampliacion');
-
+    global SignalResult
+    global SignalFromUser Frecuencia
+    Factor = inputdlg('Factor de ampliacion','Ampliacion');
+    Factor = str2double(Factor{:}); 
+    [SignalResult] = Ampliacion(SignalFromUser, Factor);
+    if (get(handles.radiobutton3,'Value') == 1)
+        disp('Ampliacion');
+        disp('------------------------------------------------------------------------------------------------------');
+        disp(SignalResult);
+    else
+        sound(SignalResult, Frecuencia);
+    end
 % --- Executes on button press in diezmacion.
 function diezmacion_Callback(hObject, eventdata, handles)
-    disp('Diezmacion');
-
+    global SignalResult
+    global SignalFromUser Index Frecuencia
+    Factor = inputdlg('Factor de diezmacion','Diezmacion');
+    Factor = str2double(Factor{:}); 
+    [SignalResult] = Decimacion(SignalFromUser', Index, Factor);
+    if (get(handles.radiobutton3,'Value') == 1)
+        disp('Diezmacion');
+        disp('------------------------------------------------------------------------------------------------------');
+        disp(SignalResult);
+    else
+        sound(SignalResult, Frecuencia);
+    end
+    
 % --- Executes on button press in espectroFrecuencias.
 function espectroFrecuencias_Callback(hObject, eventdata, handles)
     disp('FFT');
@@ -73,6 +105,7 @@ function selectFile_Callback(hObject, eventdata, handles)
         [FileName,PathName] = uigetfile('*.csv','Selecciona el archivo con los datos de la se?al discreta');
         FullPathName = strcat(PathName,FileName); %Obtengo la ruta del archivo de entradas
         [SignalFromUser, Index, Frecuencia] = LeerArchivo(FullPathName, 'discreta');
+        SignalFromUser = SignalFromUser';
         set(handles.pathFile,'String',FullPathName)
     else
         [FileName,PathName] = uigetfile('*.wav','Selecciona el archivo de audio');

@@ -1,14 +1,19 @@
-function [SignalResult] = Decimacion(SignalFromUser, Origin, Factor)
-    FirstHalf = fliplr(SignalFromUser(1:Origin));
-    SecondHalf = SignalFromUser(Origin:length(SignalFromUser));
-    
-    FirstHalf = fliplr(downsample(FirstHalf, Factor));
-    SecondHalf = downsample(SecondHalf, 2);
-    
-    if(length(SecondHalf) <= 1)
-        SignalResult = FirstHalf;
+function [SignalResult] = Decimacion(SignalFromUser, Index, Factor)
+    Origin = find(Index == 0);
+    if(Origin ~= 1)
+        FirstHalf = fliplr(SignalFromUser(1:Origin));
+        SecondHalf = SignalFromUser(Origin:length(SignalFromUser));
+
+        FirstHalf = fliplr(downsample(FirstHalf, Factor));
+        SecondHalf = downsample(SecondHalf, Factor);
+
+        if(length(SecondHalf) <= 1)
+            SignalResult = FirstHalf;
+        else
+            SignalResult = horzcat(FirstHalf, SecondHalf(2:length(SecondHalf)));
+        end
     else
-        SignalResult = horzcat(FirstHalf, SecondHalf(2:length(SecondHalf)));
+        SignalResult = downsample(SignalFromUser, Factor)';
     end
 end
 
