@@ -115,9 +115,25 @@ function espectroFrecuencias_Callback(hObject, eventdata, handles)
     disp('FFT');
     disp('------------------------------------------------------------------------------------------------------');
     disp(SignalResult);
+    Modulo = abs(SignalResult);
+    Reales = real(SignalResult);
+    Imaginario = imag(SignalResult);
+    Fase = atan(Imaginario./Reales)*180/pi;
     axes(handles.axes1);
-    stem(abs(SignalResult),'filled');
-    
+    cla
+    zoom on
+    hold on
+    stem(-length(SignalResult):-1, Modulo);
+    stem(0:length(SignalResult)-1, Modulo);
+    stem(length(SignalResult):2*length(SignalResult)-1, Modulo); 
+    hold off
+    axes(handles.axes2);
+    cla
+    hold on
+    stem(-length(Fase):-1, Fase);
+    stem(0:length(Fase)-1, Fase);
+    stem(length(Fase):2*length(SignalResult)-1, Fase); 
+    hold off
     
 % --- Executes on button press in interpolacion.
 function interpolacion_Callback(hObject, eventdata, handles)
