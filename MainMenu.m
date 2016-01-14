@@ -30,8 +30,24 @@ varargout{1} = handles.output;
 
 % --- Executes on button press in desplazamiento.
 function desplazamiento_Callback(hObject, eventdata, handles)
-    disp('Desplazamiento');
-
+    global SignalResult IndexResult
+    global SignalFromUser Index Frecuencia
+    Factor = inputdlg('Factor de ampliacion','Ampliacion');
+    Factor = str2double(Factor{:}); 
+    [SignalResult, IndexResult] = Desplazamiento(SignalFromUser, Index, Factor);
+    if (get(handles.radiobutton3,'Value') == 1)
+        disp('Desplazamiento');
+        disp('------------------------------------------------------------------------------------------------------');
+        disp(SignalResult);
+        disp(IndexResult);
+        axes(handles.axes1);
+        stem(Index, SignalFromUser,'filled');
+        axes(handles.axes2);
+        stem(IndexResult, SignalResult,'filled'); 
+    else
+        sound(SignalResult, Frecuencia);
+    end
+    
 % --- Executes on button press in reflejo.
 function reflejo_Callback(hObject, eventdata, handles)
     global SignalResult IndexResult
@@ -45,8 +61,7 @@ function reflejo_Callback(hObject, eventdata, handles)
         axes(handles.axes1);
         stem(Index, SignalFromUser,'filled');
         axes(handles.axes2);
-        stem(IndexResult, SignalResult,'filled');
-        
+        stem(IndexResult, SignalResult,'filled'); 
     else
         sound(SignalResult, Frecuencia);
     end
@@ -94,11 +109,12 @@ function diezmacion_Callback(hObject, eventdata, handles)
     global SignalFromUser Index Frecuencia
     Factor = inputdlg('Factor de diezmacion','Diezmacion');
     Factor = str2double(Factor{:}); 
-    [SignalResult] = Decimacion(SignalFromUser', Index, Factor);
+    [SignalResult, IndexResult] = Decimacion(SignalFromUser', Index, Factor);
     if (get(handles.radiobutton3,'Value') == 1)
         disp('Diezmacion');
         disp('------------------------------------------------------------------------------------------------------');
         disp(SignalResult);
+        disp(IndexResult);
         axes(handles.axes1);
         stem(Index, SignalFromUser,'filled');
         axes(handles.axes2);
@@ -117,12 +133,13 @@ function espectroFrecuencias_Callback(hObject, eventdata, handles)
     disp(SignalResult);
     Modulo = abs(SignalResult);
     Reales = real(SignalResult);
+    plot(Reales, 0:length(Reales)-1);
     Imaginario = imag(SignalResult);
     Fase = atan(Imaginario./Reales)*180/pi;
     axes(handles.axes1);
     cla
-    zoom on
     hold on
+%     plot(0:length(Reales)-1, Reales);
     stem(-length(SignalResult):-1, Modulo);
     stem(0:length(SignalResult)-1, Modulo);
     stem(length(SignalResult):2*length(SignalResult)-1, Modulo); 
@@ -137,8 +154,24 @@ function espectroFrecuencias_Callback(hObject, eventdata, handles)
     
 % --- Executes on button press in interpolacion.
 function interpolacion_Callback(hObject, eventdata, handles)
-    disp('Interpolacion');
-
+    global SignalResult IndexResult
+    global SignalFromUser Index Frecuencia
+    Factor = inputdlg('Factor de interpolacion','Interpolacion');
+    Factor = str2double(Factor{:}); 
+    [SignalResult, IndexResult] = Interpolacion(SignalFromUser', Factor, Index);
+    if (get(handles.radiobutton3,'Value') == 1)
+        disp('Interpolacion');
+        disp('------------------------------------------------------------------------------------------------------');
+        disp(SignalResult);
+        disp(IndexResult);
+        axes(handles.axes1);
+        stem(Index, SignalFromUser,'filled');
+        axes(handles.axes2);
+        stem(IndexResult, SignalResult,'filled');
+    else
+        sound(SignalResult, Frecuencia);
+    end
+    
 % --- Executes on button press in selectFile.
 function selectFile_Callback(hObject, eventdata, handles)
     global SignalFromUser Index Frecuencia
