@@ -42,11 +42,7 @@ function reflejo_Callback(hObject, eventdata, handles)
         disp('------------------------------------------------------------------------------------------------------');
         disp(SignalResult);
         disp(IndexResult);
-        axes(handles.axes1);
-        stem(Index, SignalFromUser,'filled');
-        axes(handles.axes2);
-        stem(IndexResult, SignalResult,'filled');
-        
+        axis
     else
         sound(SignalResult, Frecuencia);
     end
@@ -54,7 +50,7 @@ function reflejo_Callback(hObject, eventdata, handles)
 % --- Executes on button press in atenuacion.
 function atenuacion_Callback(hObject, eventdata, handles)
     global SignalResult
-    global SignalFromUser Frecuencia Index
+    global SignalFromUser Frecuencia
     Factor = inputdlg('Factor de atenuacion','Atenuacion');
     Factor = str2double(Factor{:}); 
     [SignalResult] = Atenuacion(SignalFromUser, Factor);
@@ -62,10 +58,6 @@ function atenuacion_Callback(hObject, eventdata, handles)
         disp('Atenuacion');
         disp('------------------------------------------------------------------------------------------------------');
         disp(SignalResult);
-        axes(handles.axes1);
-        stem(Index, SignalFromUser,'filled');
-        axes(handles.axes2);
-        stem(Index, SignalResult,'filled');
     else
         sound(SignalResult, Frecuencia);
     end
@@ -73,7 +65,7 @@ function atenuacion_Callback(hObject, eventdata, handles)
 % --- Executes on button press in ampliacion.
 function ampliacion_Callback(hObject, eventdata, handles)
     global SignalResult
-    global SignalFromUser Frecuencia Index
+    global SignalFromUser Frecuencia
     Factor = inputdlg('Factor de ampliacion','Ampliacion');
     Factor = str2double(Factor{:}); 
     [SignalResult] = Ampliacion(SignalFromUser, Factor);
@@ -81,16 +73,12 @@ function ampliacion_Callback(hObject, eventdata, handles)
         disp('Ampliacion');
         disp('------------------------------------------------------------------------------------------------------');
         disp(SignalResult);
-        axes(handles.axes1);
-        stem(Index, SignalFromUser,'filled');
-        axes(handles.axes2);
-        stem(Index, SignalResult,'filled');
     else
         sound(SignalResult, Frecuencia);
     end
 % --- Executes on button press in diezmacion.
 function diezmacion_Callback(hObject, eventdata, handles)
-    global SignalResult IndexResult
+    global SignalResult
     global SignalFromUser Index Frecuencia
     Factor = inputdlg('Factor de diezmacion','Diezmacion');
     Factor = str2double(Factor{:}); 
@@ -99,10 +87,6 @@ function diezmacion_Callback(hObject, eventdata, handles)
         disp('Diezmacion');
         disp('------------------------------------------------------------------------------------------------------');
         disp(SignalResult);
-        axes(handles.axes1);
-        stem(Index, SignalFromUser,'filled');
-        axes(handles.axes2);
-        stem(IndexResult, SignalResult,'filled');
     else
         sound(SignalResult, Frecuencia);
     end
@@ -111,13 +95,10 @@ function diezmacion_Callback(hObject, eventdata, handles)
 function espectroFrecuencias_Callback(hObject, eventdata, handles)
     global SignalResult
     global SignalFromUser
-    SignalResult = EspectroDeFrecuencia(SignalFromUser');
+    SignalResult = EspectroDeFrecuencia(SignalFromUser);
     disp('FFT');
     disp('------------------------------------------------------------------------------------------------------');
     disp(SignalResult);
-    axes(handles.axes1);
-    stem(abs(SignalResult),'filled');
-    
     
 % --- Executes on button press in interpolacion.
 function interpolacion_Callback(hObject, eventdata, handles)
