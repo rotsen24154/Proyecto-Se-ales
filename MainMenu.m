@@ -92,8 +92,13 @@ function diezmacion_Callback(hObject, eventdata, handles)
     
 % --- Executes on button press in espectroFrecuencias.
 function espectroFrecuencias_Callback(hObject, eventdata, handles)
+    global SignalResult
+    global SignalFromUser
+    SignalResult = EspectroDeFrecuencia(SignalFromUser);
     disp('FFT');
-
+    disp('------------------------------------------------------------------------------------------------------');
+    disp(SignalResult);
+    
 % --- Executes on button press in interpolacion.
 function interpolacion_Callback(hObject, eventdata, handles)
     disp('Interpolacion');
